@@ -1485,6 +1485,20 @@ impl State {
                     recolored_outputs.push(output.clone());
                 }
             }
+
+            let mut backdrop_color = config
+                .map(|c| c.backdrop_color)
+                .unwrap_or(DEFAULT_BACKDROP_COLOR)
+                .to_array_unpremul();
+            backdrop_color[3] = 1.;
+            let backdrop_color = Color32F::from(backdrop_color);
+
+            if let Some(state) = self.niri.output_state.get_mut(output) {
+                if state.backdrop_buffer.color() != backdrop_color {
+                    state.backdrop_buffer.set_color(backdrop_color);
+                    recolored_outputs.push(output.clone());
+                }
+            }
         }
 
         for output in resized_outputs {
@@ -2654,7 +2668,11 @@ impl Niri {
             .to_array_unpremul();
         background_color[3] = 1.;
 
-        let mut backdrop_color = DEFAULT_BACKDROP_COLOR.to_array_unpremul();
+        let mut backdrop_color = c
+            .map(|c| c.backdrop_color)
+            .unwrap_or(DEFAULT_BACKDROP_COLOR)
+            .to_array_unpremul();
+        backdrop_color[3] = 1.;
         backdrop_color[3] = 1.;
 
         // FIXME: fix winit damage on other transforms.
