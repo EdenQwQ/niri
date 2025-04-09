@@ -396,6 +396,7 @@ impl State {
                 if this.niri.keyboard_focus.is_overview()
                     && pressed
                     && matches!(raw, Some(Keysym::Escape | Keysym::Return))
+                    && modifiers_from_state(*mods).is_empty()
                 {
                     this.niri.layout.toggle_overview();
                     this.niri.suppressed_keys.insert(key_code);

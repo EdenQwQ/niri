@@ -445,6 +445,8 @@ pub struct Output {
     pub focus_at_startup: bool,
     #[knuffel(child, default = DEFAULT_BACKGROUND_COLOR)]
     pub background_color: Color,
+    #[knuffel(child, default = DEFAULT_BACKDROP_COLOR)]
+    pub backdrop_color: Color,
 }
 
 impl Output {
@@ -473,6 +475,7 @@ impl Default for Output {
             mode: None,
             variable_refresh_rate: None,
             background_color: DEFAULT_BACKGROUND_COLOR,
+            backdrop_color: DEFAULT_BACKDROP_COLOR,
         }
     }
 }
